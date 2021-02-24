@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.share.GroupPurchasing.db.GroupsMapper">
+
+
+    <sql id="Base_Column_List">
+        groups_id,groups_name,groups_title,goods_name,goods_photo,goods_price,goods_units,
+        goods_amount,join_user_amount,target_user_amount,min_user_amount,max_user_amount,
+        group_status,create_time,update_time,isvalid
+    </sql>
+
+
+    <select id="selectGroupsById" parameterType="String" resultType="Groups">
+        select
+        <include refid="Base_Column_List" />
+        from groups
+        where groups_id = #{groupsId}
+    </select>
+
+
+    <select id="selectPage" resultType="Groups">
+        select
+        <include refid="Base_Column_List" />
+        from groups
+    </select>
+
+
+    <insert id="insertOrUpdateGroups" parameterType="Groups" keyProperty="groups_id">
+        INSERT
+        INTO
+        groups(
+        groups_id,
+        groups_name,
+        groups_title,
+        goods_name,
+        goods_photo,
+        goods_price,
+        goods_units,
+        goods_amount,
+        join_user_amount,
+        target_user_amount,
+        min_user_amount,
+        max_user_amount,
+        group_status,
+        create_time,
+        update_time,
+        isvalid)
+        VALUES(
+        #{groupsId},
+        #{groupsName},
+        #{groupsTitle},
+        #{goodsName},
+        #{goodsPhoto},
+        #{goodsPrice},
+        #{goodsUnits},
+        #{goodsAmount},
+        #{joinUserAmount},
+        #{targetUserAmount},
+        #{minUserAmount},
+        #{maxUserAmount},
+        #{groupStatus},
+        #{createTime},
+        #{updateTime},
+        #{isValid})
+        ON DUPLICATE KEY
+        UPDATE
+        groups_name = #{groupsName},
+        groups_title = #{groupsTitle},
+        goods_name = #{goodsName},
+        goods_photo = #{goodsPhoto},
+        goods_price = #{goodsPrice},
+        goods_units = #{goodsUnits},
+        goods_amount = #{goodsAmount},
+        join_user_amount = #{joinUserAmount},
+        target_user_amount = #{targetUserAmount},
+        min_user_amount = #{minUserAmount},
+        max_user_amount = #{maxUserAmount},
+        group_status = #{groupStatus},
+        create_time = #{createTime},
+        update_time = #{updateTime},
+        isvalid = #{isValid}
+    </insert>
+
+
+</mapper>

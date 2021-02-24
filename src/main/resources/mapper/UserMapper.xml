@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.share.GroupPurchasing.db.UserMapper">
+
+
+    <sql id="Base_Column_List">
+        open_id,phone_number,address,session_key,expires_in,member_end_date,nick_name,user_photo,gender,create_time,update_time,isvalid
+    </sql>
+
+
+    <resultMap type="User" id="UserAndOrdersAndGroupsResult">
+        <id column="open_id" property="openId"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="address" property="address"/>
+        <result column="session_key" property="sessionKey"/>
+        <result column="expires_in" property="expiresIn"/>
+        <result column="cat2_name" property="cat2Name"/>
+        <result column="member_end_date" property="memberEndDate"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="user_photo" property="userPhoto"/>
+        <result column="gender" property="gender"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="isvalid" property="isValid"/>
+        <!-- List映射 -->
+        <collection property="orderList" javaType="ArrayList" ofType="UserOrder">
+            <id column="out_trade_no" property="outTradeNo"/>
+            <result column="transaction_id" property="transactionId"/>
+            <result column="open_id" property="openId"/>
+            <result column="groups_id" property="groupsId"/>
+            <result column="goods_amount" property="goodsAmount"/>
+            <result column="order_price" property="orderPrice"/>
+            <result column="order_variety" property="orderVariety"/>
+            <result column="order_status" property="orderStatus"/>
+            <result column="create_time" property="createTime"/>
+            <result column="update_time" property="updateTime"/>
+            <result column="isvalid" property="isValid"/>
+            <association property="groups" javaType="Groups">
+                <id property="groups_id" column="groupsId"></id>
+                <result property="groups_name" column="groupsName"/>
+                <result property="groups_title" column="groupsTitle"/>
+                <result property="goods_name" column="goodsName"/>
+                <result property="goods_photo" column="goodsPhoto"/>
+                <result property="goods_price" column="goodsPrice"/>
+                <result property="goods_units" column="goodsUnits"/>
+                <result property="goods_amount" column="goodsAmount"/>
+                <result property="join_user_amount" column="joinUserAmount"/>
+                <result property="target_user_amount" column="targetUserAmount"/>
+                <result property="min_user_amount" column="minUserAmount"/>
+                <result property="max_user_amount" column="maxUserAmount"/>
+                <result property="group_status" column="groupStatus"/>
+                <result column="create_time" property="createTime"/>
+                <result column="update_time" property="updateTime"/>
+                <result column="isvalid" property="isValid"/>
+            </association>
+        </collection>
+    </resultMap>
+
+
+    <select id="selectUserById" parameterType="String" resultType="User">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where open_id = #{openId}
+        <if test="phoneNum != null or phoneNum!= '' ">
+            phone_number = #{phoneNumber}
+        </if>
+    </select>
+
+    <select id="selectPage" resultType="User">
+        select
+        <include refid="Base_Column_List" />
+        from user
+    </select>
+
+
+    <select id="selectUserInfoAndOrdersAndGroups" parameterType="String" resultMap="UserAndOrdersAndGroupsResult">
+        select
+        a.open_id,
+        a.phone_number,
+        a.address,
+        a.session_key,
+        a.expires_in,
+        a.member_end_date,
+        a.nick_name,
+        a.user_photo,
+        a.gender,
+        a.create_time,
+        a.update_time,
+        a.isvalid,
+        b.out_trade_no,
+        b.transaction_id,
+        b.open_id,
+        b.groups_id,
+        b.goods_amount,
+        b.order_price,
+        b.order_variety,
+        b.order_status,
+        b.create_time,
+        b.update_time,
+        b.isvalid,
+        c.groups_name,
+        c.groups_title,
+        c.goods_name,
+        c.goods_photo,
+        c.goods_price,
+        c.goods_units,
+        c.goods_amount,
+        c.join_user_amount,
+        c.target_user_amount,
+        c.min_user_amount,
+        c.max_user_amount,
+        c.group_status,
+        c.create_time,
+        c.update_time,
+        c.isvalid
+        from `user` as a
+        left join user_order as b on a.open_id = b.open_id
+        left join groups as c on b.groups_id = c.groups_id
+        where a.open_id = #{openId}
+        order by b.create_time desc
+    </select>
+
+
+
+    <insert id="insertOrUpdateUser" parameterType="User" keyProperty="openId">
+        INSERT
+        INTO
+        user_info(
+        open_id,
+        phone_number,
+        address,
+        session_key,
+        expires_in,
+        member_end_date,
+        nick_name,
+        user_photo,
+        gender,
+        isvalid)
+        VALUES(
+        #{openId},
+        #{phoneNumber},
+        #{address},
+        #{sessionKey},
+        #{expiresIn},
+        #{memberEndDate},
+        #{nickName},
+        #{userPhoto},
+        #{gender},
+        #{isValid})
+        ON DUPLICATE KEY
+        UPDATE
+        phone_number = #{phoneNumber},
+        address = #{address},
+        session_key = #{sessionKey},
+        expires_in = #{expiresIn},
+        member_end_date = #{memberEndDate},
+        nick_name = #{nickName},
+        user_photo = #{userPhoto},
+        gender = #{gender},
+        isvalid = #{isValid}
+    </insert>
+
+
+</mapper>

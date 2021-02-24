@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.share.GroupPurchasing.db.UserOrderMapper">
+
+
+    <sql id="Base_Column_List">
+        out_trade_no,transaction_id,open_id,groups_id,goods_amount,order_price,order_variety,
+        order_status,create_time,update_time,isvalid
+    </sql>
+
+
+    <select id="selectPage" resultType="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_order
+    </select>
+
+
+    <select id="selectByOutTradeNo" resultType="UserOrder">
+        select
+        <include refid="Base_Column_List" />
+        from user_order
+        where out_trade_no = #{outTradeNo}
+    </select>
+
+
+    <insert id="insertOrUpdateUserOrder" parameterType="UserOrder" keyProperty="out_trade_no">
+        INSERT
+        INTO
+        groups(
+        out_trade_no,
+        transaction_id,
+        open_id,
+        groups_id,
+        goods_amount,
+        order_price,
+        order_variety,
+        order_status,
+        create_time,
+        update_time,
+        isvalid)
+        VALUES(
+        #{outTradeNo},
+        #{transactionId},
+        #{openId},
+        #{groupsId},
+        #{goodsAmount},
+        #{orderPrice},
+        #{orderVariety},
+        #{orderStatus},
+        #{createTime},
+        #{updateTime},
+        #{isValid})
+        ON DUPLICATE KEY
+        UPDATE
+        transaction_id = #{transactionId},
+        order_variety = #{orderVariety},
+        order_status = #{orderStatus},
+        create_time = #{createTime},
+        update_time = #{updateTime},
+        isvalid = #{isValid}
+    </insert>
+
+
+</mapper>
