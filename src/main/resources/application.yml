@@ -55,30 +55,14 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
-#wx:
-#  appid: wxc8e3f22a8a740d8a
-#  secret: fba8d9d0a76d40ca7b90cf353379b741
-#  official_accounts_appid: wx7cd99cd97d8523b6
-#  official_accounts_secret: 55fbe41821276a0f82c5dd230291707f
-#  access_token_state: 0c9dcb3f092611eb9f78525400959519
-#  url: https://api.weixin.qq.com/sns/jscode2session?
-#  access_token_url: https://api.weixin.qq.com/sns/oauth2/access_token?
-#  refresh_token_url:  https://api.weixin.qq.com/sns/oauth2/refresh_token?
-#  userinfo_url: https://api.weixin.qq.com/sns/userinfo?
-#  key: d2ccf176f57011ea8f72deacc4d2ce94
-#  mch_id: 1536086381
-#  mch_key: pcH5Rj986nlN17DibrGhhU8y17pMnppp
-#  notify_url: http://127.0.0.1:8080/pay/payResult
-#  refund_notify_url: http://ip:端口/应用/refund/refundResult.html
-#  ip: 127.0.0.1
 
 
 weixinpay:
   mchId: 1536086381
-  storePassword: pcH5Rj986nlN17DibrGhhU8y17pMnppp
-  appid: wx7cd99cd97d8523b6
-  secretKey: 55fbe41821276a0f82c5dd230291707f
-  notifyUrl: https://bctv.haoyes.com/backend/WXPay/toPayCallBack
+  storePassword: pcH5Rj986nlegasgN17DibrGhhU8y17pMnpppdaff
+  appid: wx7cd99cd97afdafd8523b6
+  secretKey: 55fbe41821276asadfasf0f82c5dd2gdrfg30291707f
+  notifyUrl: https:
   keystore: /Users/xingjw/Code/IdeaProjects/webserver/static/cert/apiclient_cert.p12
   unifiedorderUrl: https://api.mch.weixin.qq.com/pay/unifiedorder
   refundorderUrl: https://api.mch.weixin.qq.com/secapi/pay/refund
@@ -86,25 +70,8 @@ weixinpay:
 
 
 
-#sms:
-#  appid: 1400435943
-#  appkey: de13f433e887bd49f0b8502ea60ff04c
-#  templateId: 741396
-#  smsSign: BC普拉提
-#  appid: 1400434310
-#  appkey: fc0baca9231b1d276a369eec030891ae
-#  templateId: 741161
-#  smsSign: BC普拉提
-
 
 logback:
-#  db_driver: com.mysql.cj.jdbc.Driver
-#  db_url: jdbc:mysql://127.0.0.1:3306/web_server?serverTimezone=Asia/Shanghai
-#  db_url: jdbc:mysql://172.17.16.15:3306/web_server?serverTimezone=Asia/Shanghai
-#  db_name: root
-#  db_pwd: rfV@2020$
-
-#  log_home: /webserver/log/
   log_home: log/
 
 
@@ -139,8 +106,6 @@ logback:
 #  cookie: AUTH-TOKEN
 
 
-#video:
-#  refer_key: mAmj3KYxhysKCw5ZKaKE
 
 
 
